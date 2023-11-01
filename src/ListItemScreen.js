@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './ListItemCss.css';
 
 function ListItemScreen() {
@@ -26,6 +27,7 @@ function ListItemScreen() {
     setImage(null);
     document.getElementById('imageUpload').value = null;
   };
+
   return (
     <div className="homepage-container">
       <h1>List Your Item</h1>
@@ -34,7 +36,7 @@ function ListItemScreen() {
       {image && <button onClick={clearImage} className="list-item-button">Clear Image</button>}
       <button onClick={getQuote} className="list-item-button">Get Instant Quote</button>
       {quote && <p className="quote-text">Estimated Removal Cost: ${quote}</p>}
-      <button onClick={() => {}} className="list-item-button">List Item for Sale</button>
+      <Link to="/MarketplaceAdd" className="list-item-button">List Item for Sale</Link>
       <button onClick={() => {}} className="list-item-button">List Item for Free Pickup</button>
     </div>
   );
