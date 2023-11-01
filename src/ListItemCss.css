@@ -1,0 +1,64 @@
+.homepage-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+    animation: Gradient 15s ease infinite;
+  }
+
+.homepage-container, 
+.homepage-container > h1, 
+.navbar, /* or whatever the class name of your NavBar component is */
+.navbar > * { 
+    margin: 0;
+    padding: 0;
+}
+
+  
+  @keyframes Gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  
+  }
+  
+  .list-item-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #009688;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .list-item-button:hover {
+    background-color: #00796b;
+  }
+  
+  
+  .quote-text {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .file-input {
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  .uploaded-image {
+    margin-top: 20px;
+    width: 300px; /* or the desired width */
+    height: auto; /* maintain the aspect ratio */
+  }
+  
+  

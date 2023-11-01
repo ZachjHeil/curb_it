@@ -1,0 +1,55 @@
+/* GlobalStyles.css */
+
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Mobile Responsiveness */
+  @media only screen and (max-width: 600px) {
+    .login-container, .create-account-container {
+      padding: 10px;
+    }
+  
+    .login-form, .create-account-form {
+      width: 100%;
+    }
+  
+    .navbar {
+      flex-direction: column;
+    }
+  
+    .nav-link {
+      margin-bottom: 10px;
+    }
+  }
+  
+  /* Light Mode Styles */
+  @media (prefers-color-scheme: light) {
+    body {
+      background-color: #ffffff;
+      color: #000000;
+    }
+  
+    .navbar {
+      background-color: #f0f0f0;
+    }
+  }
+  
+  /* Dark Mode Styles */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #121212;
+      color: #ffffff;
+    }
+  
+    .navbar {
+      background-color: #333333;
+    }
+  }
+  
