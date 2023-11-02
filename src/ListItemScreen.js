@@ -7,6 +7,10 @@ function ListItemScreen() {
   const [image, setImage] = useState(null);
 
   const getQuote = () => {
+    if (!image) {
+      alert('You need to upload an image to get a quote.');
+      return;
+    }
     // Dummy function for example purposes
     const randomQuote = (Math.random() * 100).toFixed(2);
     setQuote(randomQuote);
