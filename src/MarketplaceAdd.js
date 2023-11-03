@@ -1,165 +1,70 @@
 import React, { useState } from 'react';
-import { styled } from '@mui/system';
-import { TextField, Button, MenuItem, Typography, Container } from '@mui/material';
-import { DropzoneArea } from 'material-ui-dropzone';
+import { Typography, Button, TextField } from '@mui/material';
 
-const BackgroundContainer = styled('div')(({ theme }) => ({
-  height: '100vh',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  background: 'linear-gradient(135deg, #83a4d4, #b6fbff)',
-  animation: 'backgroundAnimation 10s ease infinite',
-  '@keyframes backgroundAnimation': {
-    '0%': {
-      backgroundPosition: '0% 50%',
-    },
-    '50%': {
-      backgroundPosition: '100% 50%',
-    },
-    '100%': {
-      backgroundPosition: '0% 50%',
-    },
-  },
-}));
+const MarketplaceAdd = () => {
+  const [imagePreview, setImagePreview] = useState(null);
 
-const FormContainer = styled(Container)(({ theme }) => ({
-  maxWidth: 'sm',
-}));
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
-const StyledForm = styled('form')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: theme.spacing(3),
-  borderRadius: theme.spacing(1),
-  background: 'rgba(255, 255, 255, 0.9)',
-}));
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
 
-const FieldContainer = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
-}));
-
-const SubmitButton = styled(Button)(({ theme }) => ({
-  marginTop: theme.spacing(3),
-}));
-
-function MarketplaceAdd() {
-  const [formData, setFormData] = useState({
-    image: null,
-    name: '',
-    price: '',
-    address: '',
-    dateListed: '',
-    availability: 'Available',
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleImageChange = (files) => {
-    setFormData({
-      ...formData,
-      image: files[0],
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // TODO: Handle form submission
-    console.log('Form Data:', formData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Your form submission logic
   };
 
   return (
-    <BackgroundContainer>
-      <FormContainer>
-        <StyledForm onSubmit={handleSubmit}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#f5f5f5' }}>
+      <div style={{ width: '60%', padding: 16, background: 'white', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <form style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }} onSubmit={handleSubmit}>
           <Typography variant="h4">Add to Marketplace</Typography>
-          <DropzoneArea
+
+          <input
+            accept="image/*"
+            style={{ display: 'none' }}
+            id="raised-button-file"
+            type="file"
             onChange={handleImageChange}
-            acceptedFiles={['image/*']}
-            dropzoneText="Drag and drop an image here or click"
-            filesLimit={1}
           />
-          <FieldContainer>
-            <TextField
-              fullWidth
-              name="name"
-              label="Name"
-              variant="outlined"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </FieldContainer>
-          <FieldContainer>
-            <TextField
-              fullWidth
-              name="price"
-              label="Price (CAD)"
-              variant="outlined"
-              value={formData.price}
-              onChange={handleChange}
-              required
-              InputProps={{
-                startAdornment: <span>$</span>,
-              }}
-            />
-          </FieldContainer>
-          <FieldContainer>
-            <TextField
-              fullWidth
-              name="address"
-              label="Address"
-              variant="outlined"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </FieldContainer>
-          <FieldContainer>
-            <TextField
-              fullWidth
-              name="dateListed"
-              label="Date Listed"
-              variant="outlined"
-              type="date"
-              value={formData.dateListed}
-              onChange={handleChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </FieldContainer>
-          <FieldContainer>
-            <TextField
-              fullWidth
-              select
-              name="availability"
-              label="Availability"
-              variant="outlined"
-              value={formData.availability}
-              onChange={handleChange}
+          <label htmlFor="raised-button-file">
+            <Button variant="contained" component="span">
+              Upload Image
+            </Button>
+          </label>
+
+          {imagePreview && <img style={{ width: '50%', maxHeight: '150px', objectFit: 'contain', marginBottom: '16px' }} src={imagePreview} alt="Uploaded Image Preview" />}
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+            <TextField required label="Price" type="number" variant="outlined" />
+            <TextField required label="Date Listed" type="date" variant="outlined" InputLabelProps={{ shrink: true }} />
+            <TextField required label="Lister Name" pattern="[A-Za-z]+" variant="outlined" helperText="Only alphabets allowed" />
+            <TextField required label="Contact Information" placeholder="Cell Number or Email" variant="outlined" />
+            <TextField required label="Address" multiline rows={3} variant="outlined" />
+
+
+
+            <Button
+              style={{ alignSelf: 'center', marginTop: '16px' }}
+              type="submit"
+              color="primary"
+              variant="contained"
             >
-              <MenuItem value="Available">Available</MenuItem>
-              <MenuItem value="Not Available">Not Available</MenuItem>
-            </TextField>
-          </FieldContainer>
-          <SubmitButton
-            type="submit"
-            color="primary"
-            variant="contained"
-          >
-            Submit
-          </SubmitButton>
-        </StyledForm>
-      </FormContainer>
-    </BackgroundContainer>
+              Submit
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
-}
+};
 
 export default MarketplaceAdd;

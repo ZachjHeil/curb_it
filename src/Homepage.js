@@ -6,7 +6,7 @@ function Homepage() {
   return (
     <div className="homepage-container">
       <h1>Welcome to Curb It!</h1>
-      <Link to="/ListItemScreen" className="list-item-button">List an Item</Link>
+      <Link to="/MarketplaceAdd" className="list-item-button">List an Item</Link>
     </div>
   );
 }

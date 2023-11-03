@@ -8,49 +8,53 @@ import {
   Grid,
   Container,
   Button,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material'; // Updated import for MUI v5
+import { styled } from '@mui/material/styles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(2),
-  },
-  card: {
-    margin: theme.spacing(2),
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-  cardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-  price: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(2),
-    fontSize: '1.2em',
-    fontWeight: 'bold',
-  },
-  title: {
-    fontSize: '1em',
-    fontWeight: 'bold',
-  },
-  seller: {
-    color: theme.palette.text.secondary,
-  },
-  loadMoreButton: {
-    margin: theme.spacing(2),
-  },
+// Updated makeStyles to styled for MUI v5
+const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: theme.spacing(2),
+}));
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  margin: theme.spacing(2),
+  maxWidth: 345,
+}));
+
+const StyledMedia = styled(CardMedia)({
+  height: 140,
+});
+
+const StyledCardContent = styled(CardContent)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+});
+
+const StyledTypographyPrice = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  marginBottom: theme.spacing(2),
+  fontSize: '1.2em',
+  fontWeight: 'bold',
+}));
+
+const StyledTypographyTitle = styled(Typography)({
+  fontSize: '1em',
+  fontWeight: 'bold',
+});
+
+const StyledTypographySeller = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(2),
 }));
 
 function MarketPlaceDisplay() {
-  const classes = useStyles();
-
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
@@ -73,54 +77,53 @@ function MarketPlaceDisplay() {
 
   useEffect(() => {
     loadMore();
+    // Remove dependencies if loadMore does not depend on changing values, or make sure dependencies are stable.
   }, []);
 
   return (
-    <Container className={classes.container}>
+    <StyledContainer>
       <InfiniteScroll
         dataLength={items.length}
         next={loadMore}
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
         endMessage={
-          <Button
-            className={classes.loadMoreButton}
+          <StyledButton
             variant="contained"
             color="primary"
-            onClick={() => setPage(page + 1)}
+            onClick={() => setPage((prevPage) => prevPage + 1)}
           >
             Next Page
-          </Button>
+          </StyledButton>
         }
       >
-        <Grid container justify="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center">
           {items.map((item, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <Card className={classes.card}>
+              <StyledCard>
                 <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
+                  <StyledMedia
                     image={item.image}
                     title={item.title}
                   />
-                  <CardContent className={classes.cardContent}>
-                    <Typography className={classes.title} gutterBottom>
+                  <StyledCardContent>
+                    <StyledTypographyTitle gutterBottom>
                       {item.title}
-                    </Typography>
-                    <Typography className={classes.price} color="primary">
+                    </StyledTypographyTitle>
+                    <StyledTypographyPrice color="primary">
                       {item.price}
-                    </Typography>
-                    <Typography className={classes.seller} variant="body2">
+                    </StyledTypographyPrice>
+                    <StyledTypographySeller variant="body2">
                       Sold by {item.seller}
-                    </Typography>
-                  </CardContent>
+                    </StyledTypographySeller>
+                  </StyledCardContent>
                 </CardActionArea>
-              </Card>
+              </StyledCard>
             </Grid>
           ))}
         </Grid>
       </InfiniteScroll>
-    </Container>
+    </StyledContainer>
   );
 }
 
